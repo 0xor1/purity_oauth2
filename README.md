@@ -1,2 +1,3 @@
-#Purity OAuth2 [![Build Status](https://drone.io/github.com/0xor1/purity_oauth2/status.png)](https://drone.io/github.com/0xor1/purity_oauth2/latest)
+#Purity OAuth2
 
+A simple oauth2 library for the purity framework.
