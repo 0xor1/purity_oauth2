@@ -9,6 +9,11 @@ class MockLogin extends Source implements ILogin{
   static int _userIdSrc = 0;
   final int _userId = _userIdSrc++;
 
+  MockLogin()
+  :super(){
+    registerPurityOAuth2TranTypes();
+  }
+
   void login() {
     emitEvent(new OAuth2LoginAccessGranted());
   }
