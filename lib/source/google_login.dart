@@ -19,9 +19,13 @@ class GoogleLogin extends Login{
     Uri.parse(redirectUrl),
     clientId,
     secret,
-    scopes){
-    listen(this, Oauth2ResourceResponse,(Event<Oauth2ResourceResponse> event){
-      var data = JSON.decode(event.data.response);
+    scopes);
+
+  void requestUserDetails(){
+    if(_client == null) return;
+    _client.read('https://www.googleapis.com/userinfo/v2/me')
+    .then((String response){
+      var data = JSON.decode(response);
       emitEvent(
         new OAuth2LoginUserDetails()
         ..firstName = data['given_name']
@@ -30,9 +34,6 @@ class GoogleLogin extends Login{
         ..email = data['email']
         ..displayName = data['name']
         ..imageUrl = data['picture']);
-    });
-    listen(this, OAuth2LoginAccessGranted,(Event<OAuth2LoginAccessGranted> event){
-      requestResource('https://www.googleapis.com/userinfo/v2/me');
-    });
+      });
   }
 }

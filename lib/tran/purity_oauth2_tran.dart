@@ -34,6 +34,8 @@ abstract class ILogin{
   void setLoginTimeout(int seconds);
   /// request a resource, this will fail if the login has not already successfully completed.
   void requestResource(String resource, {Map<String, String> headers});
+  /// request the logged in users details.
+  void requestUserDetails();
 }
 
 class OAuth2LoginUrlRedirection extends Transmittable implements IOAuth2LoginUrlRedirection{}
