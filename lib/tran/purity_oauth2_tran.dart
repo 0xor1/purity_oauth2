@@ -27,7 +27,7 @@ void registerPurityOAuth2TranTypes(){
   });
 }
 
-abstract class ILogin{
+abstract class ILogin implements Source{
   /// start the oauth2 login process.
   void login();
   /// set the time in seconds from when the login process starts to the point when it times out.
