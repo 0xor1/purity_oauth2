@@ -36,6 +36,8 @@ abstract class ILogin{
   void requestResource(String resource, {Map<String, String> headers});
   /// request the logged in users details.
   void requestUserDetails();
+  /// closes the client connection
+  void close();
 }
 
 class OAuth2LoginUrlRedirection extends Transmittable implements IOAuth2LoginUrlRedirection{}

@@ -21,6 +21,10 @@ class MockLogin extends Source implements ILogin{
     // does nothing in the mock class
   }
 
+  void close(){
+    //does nothing in the mock class
+  }
+
   void requestUserDetails(){
     emitEvent(
       new OAuth2LoginUserDetails()
