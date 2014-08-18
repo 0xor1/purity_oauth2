@@ -2,7 +2,7 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-library purity.oauth2.tran;
+library purity.oauth2.interface;
 
 @MirrorsUsed(targets: const[
   OAuth2LoginUrlRedirection,
@@ -19,9 +19,12 @@ void registerPurityOAuth2TranTypes(){
   registerTranTypes('purity.oauth2.tran', 'pot', (){
     registerTranSubtype(OAuth2LoginUrlRedirection, () => new OAuth2LoginUrlRedirection());
     registerTranSubtype(OAuth2LoginAccessGranted, () => new OAuth2LoginAccessGranted());
+    registerTranSubtype(OAuth2LoginInProgress, () => new OAuth2LoginInProgress());
+    registerTranSubtype(OAuth2LoginNotComplete, () => new OAuth2LoginNotComplete());
     registerTranSubtype(OAuth2LoginTimeOut, () => new OAuth2LoginTimeOut());
     registerTranSubtype(OAuth2LoginAccessDenied, () => new OAuth2LoginAccessDenied());
     registerTranSubtype(OAuth2LoginUnkownError, () => new OAuth2LoginUnkownError());
+    registerTranSubtype(OAuth2LoginClientClosed, () => new OAuth2LoginClientClosed());
     registerTranSubtype(OAuth2LoginUserDetails, () => new OAuth2LoginUserDetails());
     registerTranSubtype(Oauth2ResourceResponse, () => new Oauth2ResourceResponse());
   });
@@ -47,11 +50,17 @@ abstract class IOAuth2LoginUrlRedirection{
 
 class OAuth2LoginAccessGranted extends Transmittable{}
 
+class OAuth2LoginInProgress extends Transmittable{}
+
+class OAuth2LoginNotComplete extends Transmittable{}
+
 class OAuth2LoginTimeOut extends Transmittable{}
 
 class OAuth2LoginAccessDenied extends Transmittable{}
 
 class OAuth2LoginUnkownError extends Transmittable{}
+
+class OAuth2LoginClientClosed extends Transmittable{}
 
 class OAuth2LoginUserDetails extends Transmittable implements IOAuth2LoginUserDetails{}
 abstract class IOAuth2LoginUserDetails{

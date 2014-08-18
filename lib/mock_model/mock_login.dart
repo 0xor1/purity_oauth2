@@ -2,24 +2,34 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of purity.oauth2.mock.source;
+part of purity.oauth2.mock.model;
 
 class MockLogin extends Source implements ILogin{
 
   static int _userIdSrc = 0;
-  final int _userId = _userIdSrc++;
+  final int testUserId = _userIdSrc++;
+  final Map<String, GetResource> _resourceMap;
+  bool _loggedIn = false;
+  bool _clientClosed = false;
+  bool get _clientIsAlive => _loggedIn == true && _clientClosed == false;
 
-  MockLogin()
+  MockLogin([Map<String, GetResource> this._resourceMap])
   :super(){
     registerPurityOAuth2TranTypes();
   }
 
   void login() {
-    emitEvent(new OAuth2LoginAccessGranted());
+    if(!_loggedIn){
+      _loggedIn = true;
+      emitEvent(new OAuth2LoginAccessGranted());
+    }
   }
 
   void requestResource(String resource, {Map<String, String> headers}) {
-    // does nothing in the base mock login clas
+    if(_clientIsAlive && _resourceMap != null && _resourceMap.containsKey(resource)){
+      var response = _resourceMap[resource]();
+      emitEvent(new Oauth2ResourceResponse()..response = response);
+    }
   }
 
   void setLoginTimeout(int seconds) {
@@ -27,17 +37,23 @@ class MockLogin extends Source implements ILogin{
   }
 
   void close(){
-    //does nothing in the mock class
+    if(_clientIsAlive){
+      emitEvent(new OAuth2LoginClientClosed());
+    }
   }
 
   void requestUserDetails(){
-    emitEvent(
-      new OAuth2LoginUserDetails()
-      ..firstName = 'Test$_userId'
-      ..lastName = 'User$_userId'
-      ..email = 'Test$_userId.User$_userId@mocklogin.com'
-      ..imageUrl = 'http://upload.wikimedia.org/wikipedia/commons/d/d3/User_Circle.png'
-      ..id = '$_userId'
-      ..displayName = 'Test$_userId User$_userId');
+    var firstName = 'Test$testUserId';
+    var lastName = 'User$testUserId';
+    if(_clientIsAlive){
+      emitEvent(
+        new OAuth2LoginUserDetails()
+        ..firstName = firstName
+        ..lastName = lastName
+        ..email = '$firstName.$lastName@mocklogin.com'
+        ..imageUrl = 'http://upload.wikimedia.org/wikipedia/commons/d/d3/User_Circle.png'
+        ..id = '$testUserId'
+        ..displayName = '$firstName $lastName');
+    }
   }
 }

@@ -2,7 +2,7 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of purity.oauth2.source;
+part of purity.oauth2.model;
 
 abstract class Login extends Source implements ILogin{
 
@@ -20,6 +20,7 @@ abstract class Login extends Source implements ILogin{
   final ObjectId _loginId = new ObjectId();
   oauth2.AuthorizationCodeGrant _grant;
   oauth2.Client _client;
+  Uri _clientAuthRedirect;
 
   Login(
       this._authUrl,
@@ -31,9 +32,16 @@ abstract class Login extends Source implements ILogin{
       [this._scopeDelimiter = ' ']){
     registerPurityOAuth2TranTypes();
     _grant = new oauth2.AuthorizationCodeGrant(_clientId, _secret, _authUrl, _tokenUrl);
+    _clientAuthRedirect = _grant.getAuthorizationUrl(_redirectUrl, scopes: _scopes, state: _loginId.toHexString());
   }
 
   void login(){
+
+    if(_activeLogins.containsKey(_loginId)){
+      emitEvent(new OAuth2LoginInProgress());
+      return;
+    }
+
     _activeLogins[_loginId] = this;
 
     new Future.delayed(new Duration(seconds: _timeout),(){
@@ -43,29 +51,12 @@ abstract class Login extends Source implements ILogin{
       }
     });
 
-    var authRedirectUrl = new Uri.https(_authUrl.host, _authUrl.path, {
-      'redirect_uri' : _redirectUrl.toString(),
-      'response_type' : 'code',
-      'client_id' : _clientId,
-      'scope' : _scopes.join(_scopeDelimiter),
-      'approval_prompt' : 'auto',
-      'access_type' : 'offline',
-      'state' : _loginId.toHexString()
-    });
-
-    // this needs to be called or an exception is thrown when making calls to progress
-    // the oauth2 process further down the line, it would be nice to use this url
-    // instead of the one created above but this can't be used at the moment as it
-    // doesn't allow the user to specify a scopeDelimiter character which is required
-    // for facebook as they use a non standard comma instead of space.
-    _grant.getAuthorizationUrl(_redirectUrl, scopes: _scopes, state: _loginId.toHexString());
-
-    emitEvent(new OAuth2LoginUrlRedirection()..url = authRedirectUrl.toString());
+    emitEvent(new OAuth2LoginUrlRedirection()..url = _clientAuthRedirect.toString());
   }
 
   void requestResource(String resource, {Map<String, String> headers}){
     if(_client == null){
-      throw new Exception('The login process has not yet completed.');
+      emitEvent(new OAuth2LoginNotComplete());
     }else{
       _client.read(resource, headers: headers)
       .then((String response){
@@ -76,7 +67,12 @@ abstract class Login extends Source implements ILogin{
 
   void setLoginTimeout(int seconds){ _timeout = seconds; }
 
-  void close() => _client.close();
+  void close(){
+    if(_client != null){
+      _client.close();
+      emitEvent(new OAuth2LoginClientClosed());
+    }
+  }
 
   static void setupOAuth2RedirectRouteListener(Router router, String redirectPath){
     if(_firstTimeSetupComplete == false){

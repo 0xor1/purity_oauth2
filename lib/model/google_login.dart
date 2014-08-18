@@ -2,7 +2,7 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of purity.oauth2.source;
+part of purity.oauth2.model;
 
 class GoogleLogin extends Login{
   static Uri _AUTH_URL = new Uri.https('accounts.google.com', '/o/oauth2/auth');
