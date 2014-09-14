@@ -5,9 +5,10 @@
 library purity.oauth2.interface;
 
 @MirrorsUsed(targets: const[
-  OAuth2LoginUrlRedirection,
-  OAuth2LoginUserDetails,
-  Oauth2ResourceResponse
+  IOAuth2LoginUrlRedirection,
+  IOAuth2LoginUserDetails,
+  IOauth2ResourceResponse,
+  ILogin
   ], override: '*')
 import 'dart:mirrors';
 import 'package:purity/purity.dart';
