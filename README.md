@@ -2,9 +2,9 @@
 
 A simple oauth2 library for the purity framework.
 
-##Running the tests
+##Trying the login flow
 
-To view the login flow in action you can run the integration tests in 3 ways, all require you run `pub` build` first,
+To view the login flow in action you can run the integration tests in 3 ways, all require you run `pub build` first,
 in addition there is currently a bug in the [`pub build`](https://code.google.com/p/dart/issues/detail?id=21127) where
 the packages directory is not copied to the appropriate locations, so until this bug is fixed there is the requirement
 to copy the `packages` directory from `build/test` into `all_on_client`, `bin`, `web` directories in `build/test/integration`, then:
