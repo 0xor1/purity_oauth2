@@ -2,11 +2,9 @@
  * author: Daniel Robinson  http://github.com/0xor1
  */
 
-library StopwatchLocalTest;
-
 import 'dart:html';
 import 'package:purity_oauth2/mock_model/purity_oauth2_mock_model.dart';
-import '../view/purity_oauth2_test_view.dart';
+import 'package:purity_oauth2/view/purity_oauth2_cmd_view.dart';
 
 void main(){
   var model = new MockLogin();
