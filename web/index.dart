@@ -6,7 +6,7 @@ library purity.oauth2.test.web;
 
 import 'dart:html';
 import 'package:purity/client.dart';
-import '../view/purity_oauth2_test_view.dart';
+import 'package:purity_oauth2/view/purity_oauth2_cmd_view.dart';
 
 void main(){
   initConsumerSettings(
