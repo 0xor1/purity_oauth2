@@ -14,22 +14,19 @@ import 'dart:mirrors';
 import 'package:purity/purity.dart';
 
 bool _purityOAuth2TranTypeRegistered = false;
-void registerPurityOAuth2TranTypes(){
-  if(_purityOAuth2TranTypeRegistered){ return; }
-  _purityOAuth2TranTypeRegistered = true;
-  registerTranTypes('purity.oauth2.tran', 'pot', (){
-    registerTranSubtype(OAuth2LoginUrlRedirection, () => new OAuth2LoginUrlRedirection());
-    registerTranSubtype(OAuth2LoginAccessGranted, () => new OAuth2LoginAccessGranted());
-    registerTranSubtype(OAuth2LoginInProgress, () => new OAuth2LoginInProgress());
-    registerTranSubtype(OAuth2LoginNotComplete, () => new OAuth2LoginNotComplete());
-    registerTranSubtype(OAuth2LoginTimeOut, () => new OAuth2LoginTimeOut());
-    registerTranSubtype(OAuth2LoginAccessDenied, () => new OAuth2LoginAccessDenied());
-    registerTranSubtype(OAuth2LoginUnkownError, () => new OAuth2LoginUnkownError());
-    registerTranSubtype(OAuth2LoginClientClosed, () => new OAuth2LoginClientClosed());
-    registerTranSubtype(OAuth2LoginUserDetails, () => new OAuth2LoginUserDetails());
-    registerTranSubtype(Oauth2ResourceResponse, () => new Oauth2ResourceResponse());
-  });
-}
+final Registrar  registerPurityOAuth2TranTypes = generateRegistrar(
+    'purity.oauth2.tran', 'pot', [
+    new TranRegistration.subtype(OAuth2LoginUrlRedirection, () => new OAuth2LoginUrlRedirection()),
+    new TranRegistration.subtype(OAuth2LoginAccessGranted, () => new OAuth2LoginAccessGranted()),
+    new TranRegistration.subtype(OAuth2LoginInProgress, () => new OAuth2LoginInProgress()),
+    new TranRegistration.subtype(OAuth2LoginNotComplete, () => new OAuth2LoginNotComplete()),
+    new TranRegistration.subtype(OAuth2LoginTimeOut, () => new OAuth2LoginTimeOut()),
+    new TranRegistration.subtype(OAuth2LoginAccessDenied, () => new OAuth2LoginAccessDenied()),
+    new TranRegistration.subtype(OAuth2LoginUnkownError, () => new OAuth2LoginUnkownError()),
+    new TranRegistration.subtype(OAuth2LoginClientClosed, () => new OAuth2LoginClientClosed()),
+    new TranRegistration.subtype(OAuth2LoginUserDetails, () => new OAuth2LoginUserDetails()),
+    new TranRegistration.subtype(Oauth2ResourceResponse, () => new Oauth2ResourceResponse())
+  ]);
 
 abstract class ILogin implements Source{
   /// start the oauth2 login process.
