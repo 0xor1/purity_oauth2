@@ -26,7 +26,7 @@ class GoogleLogin extends Login{
     _client.read('https://www.googleapis.com/userinfo/v2/me')
     .then((String response){
       var data = JSON.decode(response);
-      emitEvent(
+      emit(
         new OAuth2LoginUserDetails()
         ..firstName = data['given_name']
         ..lastName = data['family_name']

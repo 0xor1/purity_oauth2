@@ -45,32 +45,32 @@ class GoogleLoginView extends Consumer{
   }
 
   void _hookUpEvents(){
-    listen(googleLogin, OAuth2LoginUrlRedirection, (Event<OAuth2LoginUrlRedirection> event){
+    listen(googleLogin, OAuth2LoginUrlRedirection, (Emission<OAuth2LoginUrlRedirection> event){
       _cmdLn.enterText('redirecting to google login server: ${event.data.url}');
       _loginWindow = cnp.window.open(event.data.url, 'google-login');
     });
-    listen(googleLogin, OAuth2LoginTimeOut, (Event<OAuth2LoginTimeOut> event){
+    listen(googleLogin, OAuth2LoginTimeOut, (Emission<OAuth2LoginTimeOut> event){
       _cmdLn.enterText('login timed out, please try again');
       if(_loginWindow != null)
         _loginWindow.close();
     });
-    listen(googleLogin, OAuth2LoginAccessDenied, (Event<OAuth2LoginAccessDenied> event){
+    listen(googleLogin, OAuth2LoginAccessDenied, (Emission<OAuth2LoginAccessDenied> event){
       _cmdLn.enterText('login failed for reason - ACCESS_DENIED');
       if(_loginWindow != null)
         _loginWindow.close();
     });
-    listen(googleLogin, OAuth2LoginUnkownError, (Event<OAuth2LoginUnkownError> event){
+    listen(googleLogin, OAuth2LoginUnkownError, (Emission<OAuth2LoginUnkownError> event){
       _cmdLn.enterText('login failed for unknown error, please try again');
       if(_loginWindow != null)
         _loginWindow.close();
     });
-    listen(googleLogin, OAuth2LoginAccessGranted, (Event<OAuth2LoginAccessGranted> event){
+    listen(googleLogin, OAuth2LoginAccessGranted, (Emission<OAuth2LoginAccessGranted> event){
       _cmdLn.enterText('login success!!');
       _cmdLn.enterText('Enter requestUserDetails to display your user info.');
       if(_loginWindow != null)
         _loginWindow.close();
     });
-    listen(googleLogin, OAuth2LoginUserDetails, (Event<OAuth2LoginUserDetails> event){
+    listen(googleLogin, OAuth2LoginUserDetails, (Emission<OAuth2LoginUserDetails> event){
       var data = event.data;
       _cmdLn.enterText('image:');
       _cmdLn.enterHtml('<img src="${data.imageUrl}" alt="User profile image" height="100" width="100" style="width:100px;" />');
@@ -81,7 +81,7 @@ class GoogleLoginView extends Consumer{
       _cmdLn.enterText('email: ${data.email}');
       _cmdLn.enterText('displayName: ${data.displayName}');
     });
-    listen(googleLogin, Oauth2ResourceResponse, (Event<Oauth2ResourceResponse> event){
+    listen(googleLogin, Oauth2ResourceResponse, (Emission<Oauth2ResourceResponse> event){
       var data = event.data;
       _cmdLn.enterText('resource request response:');
       _cmdLn.enterText(data.response);

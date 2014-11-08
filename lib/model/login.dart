@@ -38,7 +38,7 @@ abstract class Login extends Source implements ILogin{
   void login(){
 
     if(_activeLogins.containsKey(_loginId)){
-      emitEvent(new OAuth2LoginInProgress());
+      emit(new OAuth2LoginInProgress());
       return;
     }
 
@@ -47,20 +47,20 @@ abstract class Login extends Source implements ILogin{
     new Future.delayed(new Duration(seconds: _timeout),(){
       var login = _activeLogins.remove(_loginId);
       if(login != null){
-        login.emitEvent(new OAuth2LoginTimeOut());
+        login.emit(new OAuth2LoginTimeOut());
       }
     });
 
-    emitEvent(new OAuth2LoginUrlRedirection()..url = _clientAuthRedirect.toString());
+    emit(new OAuth2LoginUrlRedirection()..url = _clientAuthRedirect.toString());
   }
 
   void requestResource(String resource, {Map<String, String> headers}){
     if(_client == null){
-      emitEvent(new OAuth2LoginNotComplete());
+      emit(new OAuth2LoginNotComplete());
     }else{
       _client.read(resource, headers: headers)
       .then((String response){
-        emitEvent(new Oauth2ResourceResponse()..response = response);
+        emit(new Oauth2ResourceResponse()..response = response);
       });
     }
   }
@@ -70,7 +70,7 @@ abstract class Login extends Source implements ILogin{
   void close(){
     if(_client != null){
       _client.close();
-      emitEvent(new OAuth2LoginClientClosed());
+      emit(new OAuth2LoginClientClosed());
     }
   }
 
@@ -100,10 +100,10 @@ abstract class Login extends Source implements ILogin{
       login._grant.handleAuthorizationResponse(authReq.uri.queryParameters)
       .then((oauth2.Client client){
         login._client = client;
-        login.emitEvent(new OAuth2LoginAccessGranted());
+        login.emit(new OAuth2LoginAccessGranted());
       })
       .catchError((error){
-        login.emitEvent(new OAuth2LoginUnkownError());
+        login.emit(new OAuth2LoginUnkownError());
       });
     }
 

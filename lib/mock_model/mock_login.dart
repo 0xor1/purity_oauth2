@@ -21,14 +21,14 @@ class MockLogin extends Source implements ILogin{
   void login() {
     if(!_loggedIn){
       _loggedIn = true;
-      emitEvent(new OAuth2LoginAccessGranted());
+      emit(new OAuth2LoginAccessGranted());
     }
   }
 
   void requestResource(String resource, {Map<String, String> headers}) {
     if(_clientIsAlive && _resourceMap != null && _resourceMap.containsKey(resource)){
       var response = _resourceMap[resource]();
-      emitEvent(new Oauth2ResourceResponse()..response = response);
+      emit(new Oauth2ResourceResponse()..response = response);
     }
   }
 
@@ -38,7 +38,7 @@ class MockLogin extends Source implements ILogin{
 
   void close(){
     if(_clientIsAlive){
-      emitEvent(new OAuth2LoginClientClosed());
+      emit(new OAuth2LoginClientClosed());
     }
   }
 
@@ -46,7 +46,7 @@ class MockLogin extends Source implements ILogin{
     var firstName = 'Test$testUserId';
     var lastName = 'User$testUserId';
     if(_clientIsAlive){
-      emitEvent(
+      emit(
         new OAuth2LoginUserDetails()
         ..firstName = firstName
         ..lastName = lastName
