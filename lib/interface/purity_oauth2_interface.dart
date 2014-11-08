@@ -13,7 +13,6 @@ library purity.oauth2.interface;
 import 'dart:mirrors';
 import 'package:purity/purity.dart';
 
-bool _purityOAuth2TranTypeRegistered = false;
 final Registrar  registerPurityOAuth2TranTypes = generateRegistrar(
     'purity.oauth2.tran', 'pot', [
     new TranRegistration.subtype(OAuth2LoginUrlRedirection, () => new OAuth2LoginUrlRedirection()),
