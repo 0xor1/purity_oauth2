@@ -4,13 +4,6 @@
 
 library purity.oauth2.interface;
 
-@MirrorsUsed(targets: const[
-  IOAuth2LoginUrlRedirection,
-  IOAuth2LoginUserDetails,
-  IOauth2ResourceResponse,
-  ILogin
-  ], override: '*')
-import 'dart:mirrors';
 import 'package:purity/purity.dart';
 
 final Registrar  registerPurityOAuth2TranTypes = generateRegistrar(
@@ -40,9 +33,9 @@ abstract class ILogin implements Source{
   void close();
 }
 
-class OAuth2LoginUrlRedirection extends Transmittable implements IOAuth2LoginUrlRedirection{}
-abstract class IOAuth2LoginUrlRedirection{
-  String url;
+class OAuth2LoginUrlRedirection extends Transmittable{
+  String get url => get('url');
+  void set url (String o)=> set('url', o);
 }
 
 class OAuth2LoginAccessGranted extends Transmittable{}
@@ -59,17 +52,22 @@ class OAuth2LoginUnkownError extends Transmittable{}
 
 class OAuth2LoginClientClosed extends Transmittable{}
 
-class OAuth2LoginUserDetails extends Transmittable implements IOAuth2LoginUserDetails{}
-abstract class IOAuth2LoginUserDetails{
-  String firstName;
-  String lastName;
-  String id;
-  String email;
-  String displayName;
-  String imageUrl;
+class OAuth2LoginUserDetails extends Transmittable{
+  String get firstName => get('firstName');
+  void set firstName (String o) => set('firstName', o);
+  String get lastName => get('lastName');
+  void set lastName (String o) => set('lastName', o);
+  String get id => get('id');
+  void set id (String o) => set('id', o);
+  String get email => get('email');
+  void set email (String o) => set('email', o);
+  String get displayName => get('displayName');
+  void set displayName (String o) => set('displayName', o);
+  String get imageUrl => get('imageUrl');
+  void set imageUrl (String o) => set('imageUrl', o);
 }
 
-class Oauth2ResourceResponse extends Transmittable implements IOauth2ResourceResponse{}
-abstract class IOauth2ResourceResponse{
-  String response;
+class Oauth2ResourceResponse extends Transmittable{
+  String get response => get('response');
+  void set response (String o) => set('response', o);
 }

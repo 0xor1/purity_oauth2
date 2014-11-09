@@ -2,7 +2,12 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of purity.oauth2.mock.model;
+library purity.oauth2.mock_model;
+
+import 'package:purity_oauth2/interface/oauth2.dart';
+import 'package:purity/purity.dart';
+
+typedef String GetResource();
 
 class MockLogin extends Source implements ILogin{
 

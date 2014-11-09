@@ -6,9 +6,9 @@ import 'dart:html';
 import 'dart:async';
 import 'package:purity/local.dart';
 import 'package:purity/client.dart' as client;
-import 'package:purity_oauth2/mock_model/purity_oauth2_mock_model.dart';
-import 'package:purity_oauth2/view/purity_oauth2_cmd_view.dart';
-import 'package:purity_oauth2/interface/purity_oauth2_interface.dart';
+import 'package:purity_oauth2/mock_model/oauth2.dart';
+import 'package:purity_oauth2/view/oauth2.dart';
+import 'package:purity_oauth2/interface/oauth2.dart';
 
 void main(){
 

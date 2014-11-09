@@ -3,8 +3,8 @@
  */
 
 import 'dart:html';
-import 'package:purity_oauth2/mock_model/purity_oauth2_mock_model.dart';
-import 'package:purity_oauth2/view/purity_oauth2_cmd_view.dart';
+import 'package:purity_oauth2/mock_model/oauth2.dart';
+import 'package:purity_oauth2/view/oauth2.dart';
 
 void main(){
   var model = new MockLogin();

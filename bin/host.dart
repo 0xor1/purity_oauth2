@@ -5,10 +5,9 @@
 library purity.oauth2.test.host;
 
 import 'dart:io';
-import 'dart:async';
 import 'package:purity/host.dart';
-import 'package:purity_oauth2/model/purity_oauth2_model.dart';
-import 'package:purity_oauth2/interface/purity_oauth2_interface.dart';
+import 'package:purity_oauth2/model/oauth2.dart';
+import 'package:purity_oauth2/interface/oauth2.dart';
 
 void main(){
   new Host(
