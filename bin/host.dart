@@ -25,5 +25,5 @@ void main(){
   ..start()
   .then((router){
     Login.setupOAuth2RedirectRouteListener(router, '/oauth2redirect');
-  });;
+  });
 }
