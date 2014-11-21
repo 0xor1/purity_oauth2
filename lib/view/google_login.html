@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+<polymer-element name="google-login-element">
+
+  <template>
+    <style>
+      #google-login{
+        background: #dd4b39;
+        color: #fff;
+        border-radius: 5px;
+      }
+      :host{
+        padding: 0;
+      }
+    </style>
+    <paper-button id="google-login" label="Sign in with Google" raisedButton></paper-button>
+  </template>
+
+  <script type="application/dart" src="google_login.dart"></script>
+
+</polymer-element>
