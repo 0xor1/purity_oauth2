@@ -4,6 +4,11 @@
 
 library purity.oauth2.interface;
 
+@MirrorsUsed(
+  targets: const[
+    ILogin
+  ], override: '*')
+import 'dart:mirrors';
 import 'package:purity/purity.dart';
 
 final Registrar  registerPurityOAuth2TranTypes = generateRegistrar(
